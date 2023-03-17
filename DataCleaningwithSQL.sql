@@ -1,5 +1,7 @@
+--Reviewing dataset
 SELECT *
 FROM PortfolioProject1.dbo.NashvilleHousing
+
 
 --Converting date format
 
@@ -11,6 +13,7 @@ ADD SaleDateConverted Date;
 
 UPDATE PortfolioProject1.dbo.NashvilleHousing
 SET SaleDateConverted = CONVERT(Date, SaleDate)
+
 
 --Populating Property Address data
 
@@ -43,13 +46,12 @@ WHERE a.PropertyAddress IS NULL
 
 
 --Breaking out PropertyAddress into individual columns (Address, City, State)
+
 --Looking at PropertyAddress to see how to divide it
 SELECT PropertyAddress
 FROM PortfolioProject1.dbo.NashvilleHousing
 
---Using SUBSTRING
---First substring is starting at position 1 and returning through the first comma it encouters, using -1 so comma isn't returned in output
---Second substrig is using the CHARINDEX function for starting position (+1 so it starts after the comma) and LEN(PropertyAddress) to return everything after the comma
+--Using SUBSTRING to separate address and city from the PropertyAddress column
 SELECT 
 SUBSTRING(PropertyAddress, 1, CHARINDEX(',',PropertyAddress)-1) as Address
 , SUBSTRING(PropertyAddress, CHARINDEX(',',PropertyAddress)+1, LEN(PropertyAddress)) as City
@@ -73,9 +75,7 @@ SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',',PropertyAddress
 SELECT*
 FROM PortfolioProject1.dbo.NashvilleHousing
 
---Using PARSENAME
---PARSENAME works with period delimiters so you need to replace the commas with periods
---PARSENAME works from right to left, so 1 gives you the information after the last delimiter, 2 gives you the information after the second to last delimiter, etc.
+--Alternative methos of parsing, using PARSENAME to separate address, city, and state from the OwnerAddress column
 SELECT 
 PARSENAME(REPLACE(OwnerAddress, ',','.'),3)
 , PARSENAME(REPLACE(OwnerAddress, ',','.'),2)
@@ -106,7 +106,7 @@ SELECT*
 FROM PortfolioProject1.dbo.NashvilleHousing
 
 
---Change Y and N to Yes and No in SoldAsVacant field
+--Standardizing entries, changing Y and N to Yes and No in SoldAsVacant field
 
 --Checking the distinct values in the SoldAsVacant field (discovering inconsistency in entries with mostly Yes and No values but some Y and N)
 SELECT DISTINCT(SoldAsVacant), COUNT(SoldAsVacant)
@@ -129,7 +129,7 @@ SET SoldAsVacant = CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
 		 END
 
 
---Remove duplicates
+--Removing duplicates
 
 --Setting up CTE to look for duplicate entries that won't be useful for further analysis, row_number will be greater than 1 for entries with the same information in the listed fields as another row
 WITH RowNumCTE AS(
@@ -169,10 +169,12 @@ DELETE
 FROM RowNumCTE
 WHERE row_num >1
 
+
 --Delete unused columns (although would typically use view instead and consult team before deleting columns)
 
 ALTER TABLE PortfolioProject1.dbo.NashvilleHousing
 DROP COLUMN PropertyAddress, SaleDate, OwnerAddress, TaxDistrict
+
 
 --Checking cleaned dataset
 SELECT*
