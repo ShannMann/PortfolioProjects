@@ -1,0 +1,173 @@
+---
+title: "Linear regression project"
+output:
+  word_document: default
+  html_notebook: default
+  pdf_document: default
+---
+In this project, I review the built-in R data set txhousing to build and evaluate simple and multiple regression models. This project was adapted from a guided project by Olayinka Imisioluwa Arimoro.  
+
+
+Loading required packages  
+
+```{r}
+library(tidyverse)
+library(lmtest)
+library(ggpubr)
+library(broom)
+library(ggfortify)
+library(skimr)
+```
+Importing the built-in R data set  
+```{r}
+data("txhousing")
+```
+## Examining the Data
+
+Viewing and checking the dimensions of the data set  
+```{r}
+view(txhousing)
+dim(txhousing)
+```
+Checking the column names for the data set  
+```{r}
+names(txhousing)
+```
+Looking at the first and last six rows of the data  
+```{r}
+head(txhousing)
+tail(txhousing)
+```
+Looking at the internal structure of the data frame  
+```{r}
+glimpse(txhousing)
+```
+Creating a broad overview of the data set  
+```{r}
+skim(txhousing)
+```
+## Cleaning and transforming variables
+
+Dropping the missing values in the sales, volume, and median fields  
+```{r}
+tx_data <- txhousing %>% 
+  drop_na(sales, volume, median)
+```
+
+Creating an age of house variable  
+```{r}
+tx_data$house_age <- 2023 - tx_data$year
+```
+Looking again at the new data frame
+```{r}
+skim(tx_data)
+```
+## Examining the relationship between variables
+
+Finding the correlation between the variables  
+```{r}
+cor(tx_data$sales, tx_data$volume)
+```
+Creating a scatter plot with sales on the x-axis and volume on the y-axis  
+```{r}
+ggplot(tx_data, aes(x = sales, y = volume)) +
+  geom_point() +
+  stat_smooth(se = FALSE)
+```
+
+## Creating a simple linear regression model with one dependent and one independent variable
+
+```{r}
+simple_model <- lm(volume ~ sales, data = tx_data)
+simple_model
+```
+Plotting the regression line for the model  
+```{r}
+ggplot(tx_data, aes(x = sales, y = volume)) +
+  geom_point() +
+  stat_smooth(method = lm) +
+  labs(title = 'Regression of Sales on Volume of Housing Sales in TX',
+       x = 'Sales', y = 'Volume') +
+  scale_y_continuous(labels = scales::comma)
+```
+## Performing diagnostic checks on the fitted model
+Plotting the fitted model  
+```{r}
+plot(simple_model)
+```
+
+
+No obvious pattern observed in the residuals vs. fitted plot, indicating linear relationship between predictor and outcome variable. The normal Q-Q plot indicates the residuals may not be normally distributed (this could be mitigated by the large sample size). The scale-location plot suggests heteroscedasticity since the variance of the residuals increases with the value of the fitted values. The residual vs. leverage model suggest a couple of influential observations.  
+
+Performing model fit assessment:  
+Assessing the summary of the fitted model  
+```{r}
+summary(simple_model)
+```
+There is a statistically significant relationship between the predictor and outcome variables, sales and volume. About 96% of the variance in volume can be explained by sales.  
+
+Calculating the confidence interval for the coefficients  
+```{r}
+confint(simple_model)
+```
+Building a log transformed regression model  
+```{r}
+transformed_model <- lm(log10(volume) ~ sales, data = tx_data)
+```
+
+Returning a summary of the transformed model  
+```{r}
+summary(transformed_model)
+```
+Returning the first diagnostic plot for the transformed model  
+```{r}
+plot(transformed_model, 1)
+```
+Returning the second diagnostic plot for the transformed model  
+```{r}
+plot(transformed_model, 2)
+```
+
+Returning the third diagnostic plot for the transformed model  
+```{r}
+plot(transformed_model, 3)
+```
+This model better meets the assumptions of linear regression and has smaller residual error, but it suffers in ease of interpretability since instead of sales predicting volume, it is predicting the log10 of volume.  
+
+## Making predictions using the fitted model
+
+Finding the fitted values of the simple regression model (and returning first three values):  
+```{r}
+fitted_values <- predict.lm(simple_model)
+head(fitted_values, 3)
+```
+Returning the model metrics:  
+```{r}
+model_metrics <- augment(simple_model)
+model_metrics
+```
+
+Predicting new values using the model  
+```{r}
+predict(simple_model,
+        newdata = data.frame(sales = c(210, 27, 140)))
+```
+## Building a multiple regression model
+
+Building a multiple regression model with volume as the y variable and sales, median, and age as the predictor variables and printing the results of the model.  
+```{r}
+multiple_reg <- lm(volume ~ sales + median + house_age, data = tx_data)
+multiple_reg
+```
+Reviewing the summary of the multiple regression model  
+```{r}
+summary(multiple_reg)
+```
+All of the predictors are significant. Almost 97% of the variation in volume can be explained by the model.  
+
+Plotting the fitted multiple regression model  
+```{r}
+autoplot(multiple_reg)
+```
+
+Heteroscedasticity indicated since the variance of the residuals increases with the value of the fitted values.
