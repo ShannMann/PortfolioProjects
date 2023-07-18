@@ -11,3 +11,6 @@ I downloaded the complete dataset (CSV) through February 2023 and processed in E
 In this project, I demonstrate a variety of approaches to cleaning a dataset with SQL. I've included the Nashville Housing dataset used in the project in this repository. I converted date format, self joined the table to identify data that could populate null values, broke out addresses into separate columns using SUBSTRING and PARSENAME
 functions, updated tables, used a CASE statement to standardize entries, set up a CTE to identify and remove duplicates, and deleted unused columns.
 
+## Simple Linear Regression with Python
+
+In this project, I examine marketing data to determine predictors of sales. I use Python to perform exploratory data analysis, to create visualizations to explore relationships between variables and evaluate linear regression assumptions, to build and fit a simple linear regression model, and to summarize the model evaluation and interpretation.
