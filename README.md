@@ -13,4 +13,4 @@ functions, updated tables, used a CASE statement to standardize entries, set up 
 
 ## Simple Linear Regression with Python
 
-In this project, I examine marketing data to determine predictors of sales. I use Python to perform exploratory data analysis, to create visualizations to explore relationships between variables and evaluate linear regression assumptions, to build and fit a simple linear regression model, and to summarize the model evaluation and interpretation.
+In this project, I examine marketing data to determine predictors of sales. I use Python to perform exploratory data analysis, to create visualizations to explore relationships between variables and evaluate linear regression assumptions, to build and fit a simple linear regression model, and to summarize the model for evaluation and interpretation.
