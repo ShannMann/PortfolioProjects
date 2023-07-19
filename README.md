@@ -14,3 +14,7 @@ functions, updated tables, used a CASE statement to standardize entries, set up 
 ## Simple Linear Regression with Python
 
 In this project, I examine marketing data to determine predictors of sales. I use Python to perform exploratory data analysis, to create visualizations to explore relationships between variables and evaluate linear regression assumptions, to build and fit a simple linear regression model, and to summarize the model for evaluation and interpretation.
+
+## Multiple Linear Regression with Python
+
+In this project, I continue to analyze the small business' historical marketing promotion data, including additional variables, to predict sales. I use Python to explore and clean the data, use plots and descriptive statistics to select the independent variables, create a multiple linear regression model, check model assumptions, and interpret model outputs to share results with stakeholders.
