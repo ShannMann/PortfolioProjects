@@ -18,3 +18,7 @@ In this project, I examine marketing data to determine predictors of sales. I us
 ## Multiple Linear Regression with Python
 
 In this project, I continue to analyze the small business' historical marketing promotion data, including additional variables, to predict sales. I use Python to explore and clean the data, use plots and descriptive statistics to select the independent variables, create a multiple linear regression model, check model assumptions, and interpret model outputs to share results with stakeholders.
+
+## Hypothesis Testing with Python
+
+Extending analysis of marketing promotion data, I use the data to run a one-way ANOVA and a post hoc ANOVA test with Python to determine if the sales are significantly different among TV promotion types. In this project, I use plots and descriptive statistics to select a categorical independent variable, create and fit a linear regression model, check model assumptions, perform and interpre a one-way ANOVA test, compare pairs of groups using an ANOVA post hoc test, and interpret model outputs to share with stakeholders.
