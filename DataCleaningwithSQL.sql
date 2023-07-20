@@ -5,7 +5,8 @@ FROM PortfolioProject1.dbo.NashvilleHousing
 
 --Converting date format
 
-SELECT SaleDate, CONVERT(date, SaleDate)
+SELECT SaleDate
+	, CONVERT(date, SaleDate)
 FROM PortfolioProject1.dbo.NashvilleHousing
 
 ALTER TABLE PortfolioProject1.dbo.NashvilleHousing
@@ -28,7 +29,11 @@ FROM PortfolioProject1.dbo.NashvilleHousing
 ORDER BY ParcelID
 
 --Self Join of table to allow matching of ParcelIDs with Property Addresses
-SELECT a.ParcelID, a.PropertyAddress, b.ParcelID, b.PropertyAddress, ISNULL(a.PropertyAddress,b.PropertyAddress)
+SELECT a.ParcelID
+	, a.PropertyAddress
+	, b.ParcelID
+	, b.PropertyAddress
+	, ISNULL(a.PropertyAddress,b.PropertyAddress)
 FROM PortfolioProject1.dbo.NashvilleHousing a
 JOIN PortfolioProject1.dbo.NashvilleHousing b
 	ON a.ParcelID = b.ParcelID
@@ -52,9 +57,8 @@ SELECT PropertyAddress
 FROM PortfolioProject1.dbo.NashvilleHousing
 
 --Using SUBSTRING to separate address and city from the PropertyAddress column
-SELECT 
-SUBSTRING(PropertyAddress, 1, CHARINDEX(',',PropertyAddress)-1) as Address
-, SUBSTRING(PropertyAddress, CHARINDEX(',',PropertyAddress)+1, LEN(PropertyAddress)) as City
+SELECT SUBSTRING(PropertyAddress, 1, CHARINDEX(',',PropertyAddress)-1) as Address
+	, SUBSTRING(PropertyAddress, CHARINDEX(',',PropertyAddress)+1, LEN(PropertyAddress)) as City
 FROM PortfolioProject1.dbo.NashvilleHousing
 
 --Adding split address and city columns to the NashvilleHousing table
@@ -75,11 +79,10 @@ SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',',PropertyAddress
 SELECT*
 FROM PortfolioProject1.dbo.NashvilleHousing
 
---Alternative methos of parsing, using PARSENAME to separate address, city, and state from the OwnerAddress column
-SELECT 
-PARSENAME(REPLACE(OwnerAddress, ',','.'),3)
-, PARSENAME(REPLACE(OwnerAddress, ',','.'),2)
-, PARSENAME(REPLACE(OwnerAddress, ',','.'),1)
+--Alternative methods of parsing, using PARSENAME to separate address, city, and state from the OwnerAddress column
+SELECT PARSENAME(REPLACE(OwnerAddress, ',','.'),3)
+	, PARSENAME(REPLACE(OwnerAddress, ',','.'),2)
+	, PARSENAME(REPLACE(OwnerAddress, ',','.'),1)
 FROM PortfolioProject1.dbo.NashvilleHousing
 
 --Adding the Owner split address, city, and state columns to the NashvilleHousing table
