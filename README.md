@@ -4,11 +4,11 @@
 
 In this project, I examine an HR dataset to predict whether or not an employee will leave the company and identify which variables were most important for the prediction. I use Python to perform exploratory data analysis, to create visualizations to explore relationships between variables and evaluate model assumptions, to build, fit and evaluate decision tree, random forest and XGBoost classification models to choose the best model for predicting employee attrition. I interpret the model and make recommendations based on my findings.
 
-## Simple Linear Regression with Python
+## Sales Prediction; Simple Linear Regression with Python
 
 In this project, I examine marketing data to determine predictors of sales. I use Python to perform exploratory data analysis, to create visualizations to explore relationships between variables and evaluate linear regression assumptions, to build and fit a simple linear regression model, and to summarize the model for evaluation and interpretation.
 
-## Multiple Linear Regression with Python
+## Sales Prediction; Multiple Linear Regression with Python
 
 In this project, I continue to analyze the small business' historical marketing promotion data, including additional variables, to predict sales. I use Python to explore and clean the data, use plots and descriptive statistics to select the independent variables, create a multiple linear regression model, check model assumptions, and interpret model outputs to share results with stakeholders.
 
